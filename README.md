@@ -15,7 +15,7 @@ Tableau Desktop for dashboarding.
 | `etl/` | Modular Python ETL package (extract, transform, load, orchestrate) |
 | `data/raw/` | Source CRM CSV exports (accounts, products, sales teams, pipeline) |
 | `sql/schema.sql` | PostgreSQL target schema with foreign keys and indexes |
-| `eda.ipynb` | Interactive EDA notebook with SQL queries and tabular results |
+| `sql/eda.sql` | PostgreSQL EDA queries; depends on the tables created by `sql/schema.sql` and populated by the ETL |
 
 ## 🏗 Architecture
 
@@ -100,10 +100,12 @@ Create the target schema (optional &mdash; `etl/load.py` creates tables idempote
 psql -h <host> -U <user> -d <dbname> -f sql/schema.sql
 ```
 
-After loading the data, open [`eda.ipynb`](eda.ipynb) in VS Code or Jupyter.
-Select the project's Python environment, run the setup cell, then execute
-each analysis cell. Results display as tables, and database credentials are
-read from the project-root `.env` file.
+The EDA queries require the PostgreSQL tables to exist and contain data. After
+running the ETL, execute [`sql/eda.sql`](sql/eda.sql) against the same database:
+
+```bash
+psql -h <host> -U <user> -d <dbname> -f sql/eda.sql
+```
 
 ### 4. Run the ETL
 
@@ -148,8 +150,6 @@ crm-sales-etl/
 ├── LICENSE
 ├── README.md
 ├── requirements.txt          # Python dependencies
-├── eda.ipynb                 # Interactive SQL EDA notebook
-├── eda.sql                   # Standalone EDA SQL queries
 ├── data/
 │   └── raw/                  # source CRM CSV exports (gitignored data)
 ├── etl/
@@ -160,7 +160,8 @@ crm-sales-etl/
 │   ├── load.py               # PostgreSQL DDL + bulk insert
 │   └── run_etl.py            # orchestration entry point
 ├── sql/
-│   └── schema.sql            # PostgreSQL target DDL
+│   ├── schema.sql            # PostgreSQL target DDL
+│   └── eda.sql               # PostgreSQL EDA queries (requires loaded tables)
 ├── tableau_dashboard/
 │   └── CRM_sale_dashboard.twbs #Tableau Destop file
 └── scr/
