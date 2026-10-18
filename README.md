@@ -19,29 +19,18 @@ Tableau Desktop for dashboarding.
 
 ## 🏗 Architecture
 
-```
-CSV/Excel files in data/raw/
-        │
-        ▼
-┌─────────────────┐   extract    ┌──────────────────┐
-│ etl/extract.py  │ ───────────▶ │ pandas DataFrame │
-└─────────────────┘              └──────────────────┘
-        │                               │
-        ▼ transform                     ▼
-┌─────────────────┐               ┌──────────────────┐
-│ etl/transform.py│ ───────────▶  │ Cleaned frames   │
-│ (types, dates,  │               │ + derived flags  │
-│  dedupe, flags) │               └──────────────────┘
-└─────────────────┘                         │
-        ▼ load                              ▼
-┌─────────────────┐              ┌──────────────────┐
-│   etl/load.py   │ ───────────▶ │ PostgreSQL       │
-│  (psycopg2 bulk │              │ dim_* + fact_*   │
-│   insert)       │              └──────────────────┘
-└─────────────────┘                         │
-                                            ▼
-                                      Tableau Desktop
-                                    (live connection)
+```mermaid
+---
+config:
+  look: handDrawn
+  theme: neutral
+---
+flowchart TD
+    A[run_etl.py] -->|raw csv| B[extract.py]
+    B -->|extract| C[transform.py]
+    C -->|transform| D[load.py]
+    D -->|load| E[PostgreSQL]
+    E --> Tableau
 ```
 
 ## 🗄 Target schema (PostgreSQL)
