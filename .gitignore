@@ -1,1 +1,9 @@
-.DS_store
+.DS_Store
+*.numbers
+.env
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.idea/
+.vscode/
+*.log
