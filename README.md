@@ -20,11 +20,6 @@ Tableau Desktop for dashboarding.
 ## 🏗 Architecture
 
 ```mermaid
----
-config:
-  look: handDrawn
-  theme: neutral
----
 flowchart TD
     A[run_etl.py] -->|raw csv| B[extract.py]
     B -->|extract| C[transform.py]
@@ -33,7 +28,59 @@ flowchart TD
     E --> Tableau
 ```
 
+## 🔧 Transformations applied
+
+- Column names normalized to `snake_case`
+- Inconsistent product names standardized (`GTXPro` &rarr; `GTX Pro`)
+- Dates parsed (`engage_date`, `close_date`)
+- `close_value` cast to numeric
+- Derived boolean flags for dashboards: `is_won`, `is_lost`, `is_open`
+- Null logging on critical columns (`opportunity_id`, `deal_stage`, `account`, `product`, `sales_agent`)
+
+
 ## 🗄 Target schema (PostgreSQL)
+**ER Diagram**
+```mermaid
+erDiagram
+    dim_accounts {
+        SERIAL account_id PK
+        TEXT account UK
+        TEXT sector
+        INTEGER year_established
+        NUMERIC revenue
+        INTEGER employees
+        TEXT office_location
+        TEXT subsidiary_of
+    }
+    dim_products {
+        SERIAL product_id PK
+        TEXT product UK
+        TEXT series
+        NUMERIC sales_price
+    }
+    dim_sales_teams {
+        SERIAL sales_agent_id PK
+        TEXT sales_agent UK
+        TEXT manager
+        TEXT regional_office
+    }
+    fact_sale {
+        TEXT opportunity_id PK
+        INTEGER sales_agent_id FK
+        INTEGER product_id FK
+        INTEGER account_id FK
+        TEXT deal_stage
+        DATE engage_date
+        DATE close_date
+        NUMERIC close_value
+        BOOLEAN is_won
+        BOOLEAN is_lost
+        BOOLEAN is_open
+    }
+    dim_accounts o|--o{ fact_sale : "account_id"
+    dim_products ||--o{ fact_sale : "product_id"
+    dim_sales_teams ||--o{ fact_sale : "sales_agent_id"
+```
 
 Four tables, loaded in dependency order. Each dimension table has its own
 auto-increment surrogate primary key; `fact_sale` connects only by those IDs:
@@ -46,17 +93,6 @@ auto-increment surrogate primary key; `fact_sale` connects only by those IDs:
 Foreign keys link `fact_sale` to each dimension via the surrogate IDs. Indexes on
 `sales_agent_id`, `product_id`, `account_id`, `deal_stage`, `engage_date`, and
 `close_date` support fast Tableau aggregations.
-
-![ERdiagram](<scr/ER diagram.png>)
-
-## 🔧 Transformations applied
-
-- Column names normalized to `snake_case`
-- Inconsistent product names standardized (`GTXPro` &rarr; `GTX Pro`)
-- Dates parsed (`engage_date`, `close_date`)
-- `close_value` cast to numeric
-- Derived boolean flags for dashboards: `is_won`, `is_lost`, `is_open`
-- Null logging on critical columns (`opportunity_id`, `deal_stage`, `account`, `product`, `sales_agent`)
 
 ## 🚀 Quick start
 
@@ -151,10 +187,9 @@ crm-sales-etl/
 ├── sql/
 │   ├── schema.sql            # PostgreSQL target DDL
 │   └── eda.sql               # PostgreSQL EDA queries (requires loaded tables)
-├── tableau_dashboard/
-│   └── CRM_sale_dashboard.twbs #Tableau Destop file
-└── scr/
-    └── ER diagram.png
+└── tableau_dashboard/
+    └── CRM_sale_dashboard.twbs #Tableau Destop file
+
 ```
 
 ## License
@@ -163,7 +198,7 @@ MIT
 
 ---
 
-## Creator
+# Author
 Name - Ye Zaw Myint
 email - yezaw5601@gmail.com
 contact - [https://yezaw.carrd.co](https://yezaw.carrd.co)
