@@ -39,7 +39,7 @@ flowchart TD
 
 
 ## 🗄 Target schema (PostgreSQL)
-**ER Diagram**
+**ER Diagram Star Schema**
 ```mermaid
 erDiagram
     dim_accounts {
