@@ -166,6 +166,14 @@ See [`docs/tableau_connection.md`](docs/tableau_connection.md) for the full walk
    - `fact_sale.account_id = dim_accounts.account_id`
 5. Build dashboards: pipeline by deal stage, revenue by agent/region, win rate by product, quarterly trends.
 
+## Tableau Public Link
+![dashboard](data/dashboard.gif)
+
+link: 
+https://public.tableau.com/views/CRM_sales/SaleAnalysis?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
+
+---
+
 ## 📁 Project structure
 
 ```
@@ -184,13 +192,12 @@ crm-sales-etl/
 │   ├── transform.py          # cleaning + derived columns
 │   ├── load.py               # PostgreSQL DDL + bulk insert
 │   └── run_etl.py            # orchestration entry point
-├── sql/
-│   ├── schema.sql            # PostgreSQL target DDL
-│   └── eda.sql               # PostgreSQL EDA queries (requires loaded tables)
-└── tableau_dashboard/
-    └── CRM_sale_dashboard.twbs #Tableau Destop file
-
+└── sql/
+    ├── schema.sql            # PostgreSQL target DDL
+    └── eda.sql               # PostgreSQL EDA queries (requires loaded tables)
 ```
+
+---
 
 ## License
 

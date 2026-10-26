@@ -360,3 +360,14 @@ SELECT
     COUNT(*) FILTER (WHERE regional_office IS NULL)
 FROM dim_sales_teams;
 
+
+
+/*markdown
+# Data Valid Check
+*/
+
+SELECT 
+COUNT(close_value),
+COUNT(close_date )
+FROM fact_sale 
+WHERE is_lost ='true' AND is_open ='true';
