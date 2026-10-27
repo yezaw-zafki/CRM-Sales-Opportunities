@@ -193,7 +193,7 @@ crm-sales-etl/
 │   └── run_etl.py            # orchestration entry point
 └── sql/
     ├── schema.sql            # PostgreSQL target DDL
-    └── eda.sql               # PostgreSQL EDA queries (requires loaded tables)
+    └── eda.sql               # PostgreSQL EDA queries & Data Validation (requires loaded tables)
 ```
 
 ---
