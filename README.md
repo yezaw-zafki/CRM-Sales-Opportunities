@@ -167,10 +167,9 @@ See [`docs/tableau_connection.md`](docs/tableau_connection.md) for the full walk
 5. Build dashboards: pipeline by deal stage, revenue by agent/region, win rate by product, quarterly trends.
 
 ## Tableau Public Link
-![dashboard](data/dashboard.gif)
+![Dashboard](data/Tableau_dashboard.gif)
 
-link: 
-https://public.tableau.com/views/CRM_sales/SaleAnalysis?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
+link: https://public.tableau.com/views/CRM_sales/SaleAnalysis?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 
 ---
 
@@ -206,10 +205,8 @@ MIT
 ---
 
 # Author
-Name - Ye Zaw Myint
-
-email - yezaw5601@gmail.com
-
-contact - [https://yezaw.carrd.co](https://yezaw.carrd.co)
+Name - Ye Zaw Myint  
+email - yezaw5601@gmail.com  
+contact - [https://yezaw.carrd.co](https://yezaw.carrd.co)  
 
 ---
