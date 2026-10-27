@@ -99,7 +99,7 @@ Foreign keys link `fact_sale` to each dimension via the surrogate IDs. Indexes o
 ### 1. Clone & create environment
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/yezaw-zafki/CRM-Sales-Opportunities.git
 cd crm-sales-etl
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
